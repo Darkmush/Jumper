@@ -15,15 +15,15 @@ public class JumperGame extends ApplicationAdapter {
 	public void create () {
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
-        float gameHeight = 337;
-        float gameWidth = screenWidth/(screenHeight/gameHeight);
 
+        float gameWidth = 300;
+        float gameHeight = screenHeight/(screenWidth/gameWidth);
 
         int midPointY = (int) (gameHeight/2);
 
 
-        world = new GameWorld(midPointY);
-        renderer = new GameRenderer(world, (int) gameWidth, midPointY);
+        world = new GameWorld((int)gameHeight);
+        renderer = new GameRenderer(world, (int) gameWidth, (int) gameHeight, midPointY);
 
         Gdx.input.setInputProcessor(new InputHandler(world.getRunner()));
     }

@@ -1,6 +1,7 @@
 package se.dara.jumper.gameworld;
 
 
+import se.dara.jumper.gameobjects.Ground;
 import se.dara.jumper.gameobjects.Runner;
 
 /**
@@ -8,9 +9,11 @@ import se.dara.jumper.gameobjects.Runner;
  */
 public class GameWorld {
     Runner runner;
+    Ground ground;
 
-    public GameWorld(int midPointY) {
-        runner = new Runner(100, midPointY-5, 17, 12);
+    public GameWorld(int gameHeight) {
+        ground = new Ground(gameHeight);
+        runner = new Runner(75, ground.getGroundLevel(), 17, 12, ground);
     }
 
     public void update(float delta){
