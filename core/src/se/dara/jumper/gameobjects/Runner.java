@@ -27,7 +27,6 @@ public class Runner {
         if(velocity.y < -200) {
             velocity.y = -200;
         }
-
         if(pos.y > 300) {
             velocity.y = 0;
             pos.y = 300;
