@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import se.dara.jumper.gameobjects.Hole;
+
 /**
  * Created by dara on 18/04/14.
  */
@@ -46,6 +48,15 @@ public class GameRenderer {
         shapeRenderer.setColor(0,1,0,1);
         shapeRenderer.rect(0, world.getGround().getGroundLevel(), gameWidth, 5);
 
+        // Draw holes
+        shapeRenderer.setColor(131/255.0f, 173/255.0f, 1f, 1f);
+        for (Hole h : world.getGround().getHoles()) {
+            shapeRenderer.rect(h.getX(), world.getGround().getGroundLevel(), h.getLength(),
+                    gameHeight - world.getGround().getGroundLevel());
+        }
+
+
+        // Draw charge-bar
         if(world.getRunner().getCharge() > 0) {
             shapeRenderer.setColor(1, 0, 0, 1);
             shapeRenderer.rect(100, 20, 100, 20);

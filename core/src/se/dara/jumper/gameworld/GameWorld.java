@@ -10,19 +10,27 @@ import se.dara.jumper.gameobjects.Runner;
 public class GameWorld {
     Runner runner;
     Ground ground;
+    int gameHeight, gameWidth;
 
-    public GameWorld(int gameHeight) {
+
+    public GameWorld(int gameHeight, int gameWidth) {
+        this.gameHeight = gameHeight;
+        this.gameWidth = gameWidth;
         ground = new Ground(gameHeight);
         int runnerHeight = 12;
         runner = new Runner(75, ground.getGroundLevel()-runnerHeight, 17, runnerHeight, ground);
     }
 
     public void update(float delta){
+
         runner.update(delta);
+        ground.update(delta);
     }
 
     public Runner getRunner() {
         return runner;
     }
     public Ground getGround() { return ground; }
+    public int getGameHeight() { return gameHeight; }
+    public int getGameWidth() { return gameWidth; }
 }
