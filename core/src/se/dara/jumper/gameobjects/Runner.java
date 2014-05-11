@@ -29,9 +29,9 @@ public class Runner {
         if(velocity.y > 200) {
             velocity.y = 200;
         }
-        if(ground.isOnGround((int)pos.y) && velocity.y > 0) {
+        if(ground.isOnGround(this) && velocity.y > 0) {
             velocity.y = 0;
-            pos.y = ground.getGroundLevel();
+            pos.y = ground.getGroundLevel()-getHeight();
         }
 
         if(charge > 0 && charge < 1){
@@ -42,7 +42,7 @@ public class Runner {
     }
 
     public void touchDown(){
-        if(ground.isOnGround((int)pos.y)) {
+        if(ground.isOnGround(this)) {
             charge = 0.01f;
         }
     }
@@ -52,7 +52,7 @@ public class Runner {
     }
 
     public void touchUp() {
-        if(ground.isOnGround((int)pos.y) && charge > 0) {
+        if(ground.isOnGround(this) && charge > 0) {
             velocity.y = -150 - (150*charge);
             charge = 0;
         }

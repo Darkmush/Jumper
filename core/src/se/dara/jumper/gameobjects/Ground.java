@@ -10,11 +10,11 @@ public class Ground {
 
     public Ground(int gameHeight){
         this.gameHeight = gameHeight;
-        groundY = (int) (gameHeight * 0.8);
+        groundY = (int) (gameHeight * 0.9);
     }
 
-    public boolean isOnGround(int y){
-        if(y >= groundY ){
+    public boolean isOnGround(Runner runner){
+        if(runner.getY() + runner.getHeight() >= groundY ){
             return true;
         }
         return false;

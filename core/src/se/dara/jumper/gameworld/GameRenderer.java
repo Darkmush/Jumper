@@ -13,9 +13,12 @@ public class GameRenderer {
     GameWorld world;
     OrthographicCamera camera;
     ShapeRenderer shapeRenderer;
+    int gameWidth, gameHeight;
 
     public GameRenderer(GameWorld world, int gameWidth , int gameHeight, int midPointY) {
         this.world = world;
+        this.gameHeight = gameHeight;
+        this.gameWidth = gameWidth;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(true, gameWidth, gameHeight);
@@ -35,12 +38,20 @@ public class GameRenderer {
         shapeRenderer.rect(world.getRunner().getX(), world.getRunner().getY(),
                 world.getRunner().getWidth(), world.getRunner().getHeight());
 
+        // Draw dirt
+        shapeRenderer.setColor(147 / 255.0f, 80 / 255.0f, 27 / 255.0f, 1);
+        shapeRenderer.rect(0, world.getGround().getGroundLevel(), gameWidth, gameHeight - world.getGround().getGroundLevel());
+
+        // Draw grass
+        shapeRenderer.setColor(0,1,0,1);
+        shapeRenderer.rect(0, world.getGround().getGroundLevel(), gameWidth, 5);
+
         if(world.getRunner().getCharge() > 0) {
             shapeRenderer.setColor(1, 0, 0, 1);
             shapeRenderer.rect(100, 20, 100, 20);
 
             shapeRenderer.setColor(0, 1, 0, 1);
-            int progress = (int) (95*world.getRunner().getCharge());
+            int progress = (int) (96*world.getRunner().getCharge());
             shapeRenderer.rect(102, 22, progress, 16);
         }
 

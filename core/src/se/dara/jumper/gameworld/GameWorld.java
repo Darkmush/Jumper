@@ -13,7 +13,8 @@ public class GameWorld {
 
     public GameWorld(int gameHeight) {
         ground = new Ground(gameHeight);
-        runner = new Runner(75, ground.getGroundLevel(), 17, 12, ground);
+        int runnerHeight = 12;
+        runner = new Runner(75, ground.getGroundLevel()-runnerHeight, 17, runnerHeight, ground);
     }
 
     public void update(float delta){
@@ -23,4 +24,5 @@ public class GameWorld {
     public Runner getRunner() {
         return runner;
     }
+    public Ground getGround() { return ground; }
 }
