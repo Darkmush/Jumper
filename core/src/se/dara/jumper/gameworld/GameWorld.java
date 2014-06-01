@@ -11,20 +11,26 @@ public class GameWorld {
     Runner runner;
     Ground ground;
     int gameHeight, gameWidth;
+    int runnerHeight = 12;
 
 
     public GameWorld(int gameHeight, int gameWidth) {
         this.gameHeight = gameHeight;
         this.gameWidth = gameWidth;
         ground = new Ground(gameHeight);
-        int runnerHeight = 12;
-        runner = new Runner(75, ground.getGroundLevel()-runnerHeight, 17, runnerHeight, ground);
+
+        runner = new Runner(75, ground.getGroundLevel()-runnerHeight, 6, runnerHeight, this);
     }
 
     public void update(float delta){
 
         runner.update(delta);
         ground.update(delta);
+    }
+
+    public void restartGame() {
+        ground = new Ground(gameHeight);
+        // runner = new Runner(75, ground.getGroundLevel()-runnerHeight, 6, runnerHeight, this);
     }
 
     public Runner getRunner() {

@@ -34,11 +34,8 @@ public class GameRenderer {
         // background
         Gdx.gl.glClearColor(131/255.0f, 173/255.0f, 1f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(0,0,0,1);
-        shapeRenderer.rect(world.getRunner().getX(), world.getRunner().getY(),
-                world.getRunner().getWidth(), world.getRunner().getHeight());
+
 
         // Draw dirt
         shapeRenderer.setColor(147 / 255.0f, 80 / 255.0f, 27 / 255.0f, 1);
@@ -48,6 +45,7 @@ public class GameRenderer {
         shapeRenderer.setColor(0,1,0,1);
         shapeRenderer.rect(0, world.getGround().getGroundLevel(), gameWidth, 5);
 
+
         // Draw holes
         shapeRenderer.setColor(131/255.0f, 173/255.0f, 1f, 1f);
         for (Hole h : world.getGround().getHoles()) {
@@ -55,6 +53,10 @@ public class GameRenderer {
                     gameHeight - world.getGround().getGroundLevel());
         }
 
+        // Draw player
+        shapeRenderer.setColor(0,0,0,1);
+        shapeRenderer.rect(world.getRunner().getX(), world.getRunner().getY(),
+                world.getRunner().getWidth(), world.getRunner().getHeight());
 
         // Draw charge-bar
         if(world.getRunner().getCharge() > 0) {

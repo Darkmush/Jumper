@@ -2,6 +2,8 @@ package se.dara.jumper.gameobjects;
 
 import com.badlogic.gdx.math.Vector2;
 
+import se.dara.jumper.gameworld.GameWorld;
+
 /**
  * Created by dara on 20/04/14.
  */
@@ -9,29 +11,37 @@ public class Runner {
     Vector2 pos, velocity, acceleration;
     float rotation, charge;
     int width, height;
-    Ground ground;
+    GameWorld world;
 
-    public Runner(float x, float y, int width, int height, Ground ground){
+    public Runner(float x, float y, int width, int height, GameWorld world){
         this.width = width;
         this.height = height;
         pos = new Vector2(x, y);
         velocity = new Vector2(0,0);
         acceleration = new Vector2(0, 460);
-        this.ground = ground;
+        this.world = world;
     }
 
     public void update(float delta){
 
-        if(pos.y < ground.getGroundLevel()) {
+        // TODO: edge case, end of hole
+        if((world.getGround().getPlayerLocation(this) == Ground.playerLocation.HOLE &&
+                pos.y > world.getGameHeight()))
+        {
+            charge = 0;
+            world.restartGame();
+        }
+
+        if(pos.y < world.getGround().getGroundLevel()) {
             velocity.add(acceleration.cpy().scl(delta));
         }
 
         if(velocity.y > 200) {
             velocity.y = 200;
         }
-        if(ground.isOnGround(this) && velocity.y > 0) {
+        if(world.getGround().getPlayerLocation(this) == Ground.playerLocation.GROUND && velocity.y > 0) {
             velocity.y = 0;
-            pos.y = ground.getGroundLevel()-getHeight();
+            pos.y = world.getGround().getGroundLevel()-getHeight();
         }
 
         if(charge > 0 && charge < 1){
@@ -42,7 +52,7 @@ public class Runner {
     }
 
     public void touchDown(){
-        if(ground.isOnGround(this)) {
+        if(world.getGround().getPlayerLocation(this) == Ground.playerLocation.GROUND) {
             charge = 0.01f;
         }
     }
@@ -52,7 +62,7 @@ public class Runner {
     }
 
     public void touchUp() {
-        if(ground.isOnGround(this) && charge > 0) {
+        if(world.getGround().getPlayerLocation(this) == Ground.playerLocation.GROUND && charge > 0) {
             velocity.y = -150 - (150*charge);
             charge = 0;
         }

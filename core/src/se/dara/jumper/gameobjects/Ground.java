@@ -1,6 +1,7 @@
 package se.dara.jumper.gameobjects;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by dara on 09/05/14.
@@ -10,13 +11,15 @@ public class Ground {
     int gameHeight;
     int groundY;
     ArrayList<Hole> holes;
+    public enum playerLocation {GROUND, AIR, HOLE}
+    Random r = new Random();
 
     public Ground(int gameHeight){
         this.gameHeight = gameHeight;
         groundY = (int) (gameHeight * 0.9);
         holes = new ArrayList<Hole>();
-        holes.add(new Hole(300, 40));
-        holes.add(new Hole(490, 40));
+        holes.add(new Hole(300, r.nextInt(60)+30));
+        holes.add(new Hole(490, r.nextInt(60)+30));
     }
 
     public void update(float delta) {
@@ -33,15 +36,21 @@ public class Ground {
 
         if(toBeRemoved != null) {
             holes.remove(toBeRemoved);
-            holes.add(new Hole(300, 40));
+            holes.add(new Hole(300, r.nextInt(60)+30));
         }
     }
 
-    public boolean isOnGround(Runner runner){
+    public playerLocation getPlayerLocation(Runner runner){
         if(runner.getY() + runner.getHeight() >= groundY ){
-            return true;
+            for (Hole h : holes) {
+                if(runner.getX() > h.getX() && runner.getX() < h.getX()+h.getLength()){
+                    return playerLocation.HOLE;
+                }
+            }
+
+            return playerLocation.GROUND;
         }
-        return false;
+        return playerLocation.AIR;
     }
 
     public int getGroundLevel(){
